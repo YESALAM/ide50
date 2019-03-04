@@ -98,9 +98,19 @@ fi
 sudo apt-get update
 
 echo "Reinstalling ide package..."
-sudo -E apt-get -o Dpkg::Options::="--force-confnew" -o Dpkg::Options::="--force-overwrite" install --reinstall --yes --force-yes --assume-yes ide50
+if sudo -E apt-get -o Dpkg::Options::="--force-confnew" -o Dpkg::Options::="--force-overwrite" install --reinstall --yes --force-yes --assume-yes ide50; then
+    echo "------installed ide50"
+else 
+    echo "------failed"
+    apt-mark showhold
+fi
 
-sudo apt-get install -y libcs50=8.1.2
+if sudo apt-get install -y libcs50=8.1.2; then
+    echo "-----apt-installed libcs50"
+else
+    echo "-----failed libcs50"
+    apt-mark showhold
+fi
 
 echo "Installing other packages..."
 
